@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank App</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .bank-app {
+            width: 400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #4CAF50;
+        }
+
+        .balance {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="number"],
+        input[type="button"] {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px 0;
+            width: 80%;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        .actions {
+            margin-top: 20px;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bank-app">
+        <h1>Bank App</h1>
+
+        <div class="balance">
+            <p>Your Current Balance: $<span id="balance">5000.00</span></p>
+        </div>
+
+        <div class="actions">
+            <input type="number" id="amount" placeholder="Enter Amount" />
+            <div>
+                <input type="button" value="Deposit" onclick="deposit()" />
+                <input type="button" value="Withdraw" onclick="withdraw()" />
+            </div>
+            <p class="error" id="error-message"></p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Bank App. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        let balance = 5000;
+
+        function updateBalance() {
+            document.getElementById('balance').innerText = balance.toFixed(2);
+        }
+
+        function deposit() {
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (isNaN(amount) || amount <= 0) {
+                showError("Please enter a valid amount to deposit.");
+                return;
+            }
+
+            balance += amount;
+            updateBalance();
+            clearError();
+        }
+
+        function withdraw() {
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (isNaN(amount) || amount <= 0) {
+                showError("Please enter a valid amount to withdraw.");
+                return;
+            }
+
+            if (amount > balance) {
+                showError("Insufficient funds for this withdrawal.");
+                return;
+            }
+
+            balance -= amount;
+            updateBalance();
+            clearError();
+        }
+
+        function showError(message) {
+            document.getElementById('error-message').innerText = message;
+        }
+
+        function clearError() {
+            document.getElementById('error-message').innerText = '';
+        }
+    </script>
+
+</body>
+
+</html>
